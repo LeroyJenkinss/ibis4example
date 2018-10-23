@@ -39,11 +39,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ibissource</groupId>
-			<artifactId>ibis-adapterframework-larva</artifactId>
-			<version>${iaf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.ibissource</groupId>
 			<artifactId>ibis-adapterframework-webapp</artifactId>
 			<version>${iaf.version}</version>
 			<type>war</type>
