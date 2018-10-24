@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Example') {
             steps {
-                 bat 'mvn help:active-profiles'
+                 bat 'mvn deploy -p profile1NEXUS'
             }
         }
     }
