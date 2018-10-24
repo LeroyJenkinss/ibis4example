@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Example') {
             steps {
-                 bat 'mvn deploy groupId:artifactId:goal -P profile1NEXUS'
+                 bat 'mvn deploy -P profile1NEXUS'
             }
         }
     }
