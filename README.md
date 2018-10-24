@@ -76,4 +76,4 @@ After modifying a project file:
 
 The jetty-maven-plugin requires Maven 3 and Java 1.7.
 
-CHRIS WAS HIER
+nitus
