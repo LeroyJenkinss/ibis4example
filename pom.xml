@@ -91,9 +91,13 @@
 			</plugin>
 		</plugins>
 	</build>
+	
 	<profiles>
 		<profile>
 			<id>profile1NEXUS</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<build>
 				<plugins>
 					<plugin>
