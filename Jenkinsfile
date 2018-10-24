@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Example') {
             steps {
-                 bat 'mvn deploy -P profile1NEXUS-org.apache.maven.plugins-maven-gpg-plugin-sign'
+                 bat 'mvn -P profile1NEXUS'
             }
         }
     }
