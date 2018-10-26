@@ -115,7 +115,7 @@
 	</build>
 	<profiles>
 		<profile>
-			<id>profile1NEXUS</id>
+			<id>nexusInterpar</id>
 			<distributionManagement>
 				<repository>
 					<id>nexusInterpar</id>
@@ -134,7 +134,7 @@
 						<version>1.6.8</version>
 						<extensions>true</extensions>
 						<configuration>
-							<serverId>profile1NEXUS</serverId>
+							<serverId>nexusInterpar</serverId>
 							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
 							<autoReleaseAfterClose>true</autoReleaseAfterClose>
 						</configuration>
