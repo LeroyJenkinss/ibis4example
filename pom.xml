@@ -128,7 +128,7 @@
 					<url>file:target/site-deploy</url>
 				</site>
 			</distributionManagement>
-			<build>
+	<!--  	<build>
 				<plugins>
 					<plugin>
 						<groupId>org.sonatype.plugins</groupId>
@@ -142,7 +142,7 @@
 						</configuration>
 					</plugin>
 				</plugins>
-			</build>
+			</build>-->
 		</profile>
 
 		<profile>
