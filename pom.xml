@@ -115,34 +115,22 @@
 	</build>
 	<profiles>
 		<profile>
-			<id>nexusInterpar</id>
+			<id>nexusIbissource</id>
 			<distributionManagement>
 				<repository>
-					<id>nexusInterpar</id>
-					<name>nexusInterpar</name>
-					<url>http://nexus.interpar.nl/content/repositories/nexusInterpar</url>
+					<id>nexusIbissource</id>
+					<name>nexusIbissource</name>
+					<url>http://nexus.interpar.nl/content/repositories/releases</url>
 				</repository>
-
+				<snapshotRepository>
+					<id>nexusIbissource</id>
+					<url>http://nexus.interpar.nl/content/repositories/snapshots</url>
+				</snapshotRepository>
 				<site>
 					<id>www.ibissource.org</id>
 					<url>file:target/site-deploy</url>
 				</site>
 			</distributionManagement>
-	<!--  	<build>
-				<plugins>
-					<plugin>
-						<groupId>org.sonatype.plugins</groupId>
-						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>1.6.8</version>
-						<extensions>true</extensions>
-						<configuration>
-							<serverId>nexusInterpar</serverId>
-							<nexusUrl>http://nexus.interpar.nl</nexusUrl>
-							<autoReleaseAfterClose>true</autoReleaseAfterClose>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>-->
 		</profile>
 
 		<profile>
