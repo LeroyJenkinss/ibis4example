@@ -7,7 +7,7 @@
 
 	<groupId>org.ibissource</groupId>
 	<artifactId>ibis4example</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<packaging>war</packaging>
 	<name>Ibis4Example</name>
 	<description>test project</description>
@@ -120,12 +120,9 @@
 				<repository>
 					<id>nexusIbissource</id>
 					<name>nexusIbissource</name>
-					<url>http://nexus.interpar.nl/content/repositories/releases</url>
+					<url>http://nexus.interpar.nl/content/repositories/nexusIbissource</url>
 				</repository>
-				<snapshotRepository>
-					<id>nexusIbissource</id>
-					<url>http://nexus.interpar.nl/content/repositories/snapshots</url>
-				</snapshotRepository>
+
 				<site>
 					<id>www.ibissource.org</id>
 					<url>file:target/site-deploy</url>
