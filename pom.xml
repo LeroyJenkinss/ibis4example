@@ -113,21 +113,16 @@
 			</plugin>
 		</plugins>
 	</build>
+	<distributionManagement>
+		<repository>
+			<name>nexusInterpar</name>
+			<id>nexusInterpar</id>
+			<url>http://nexus.interpar.nl/content/repositories/nexusInterpar</url>
+		</repository>
+	</distributionManagement>
 	<profiles>
 		<profile>
 			<id>nexusInterpar</id>
-			<distributionManagement>
-				<repository>
-					<name>nexusInterpar</name>
-					<id>nexusInterpar</id>
-					<url>http://nexus.interpar.nl/content/repositories/nexusInterpar</url>
-				</repository>
-
-				<site>
-					<id>www.ibissource.org</id>
-					<url>file:target/site-deploy</url>
-				</site>
-			</distributionManagement>
 			<build>
 				<plugins>
 					<plugin>
