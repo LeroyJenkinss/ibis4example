@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.ibissource</groupId>
-	<artifactId>ibis4example</artifactId>
+	<artifactId>ibis4example</artifactId> 
 	<version>0.0.3</version>
 	<packaging>war</packaging>
 	<name>Ibis4Example</name>
