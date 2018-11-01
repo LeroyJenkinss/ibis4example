@@ -1,9 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.ibissource</groupId>
-	<artifactId>ibis4example</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>ibis4example</artifactId> 
+	<version>0.0.5</version>
 	<packaging>war</packaging>
 	<name>Ibis4Example</name>
 	<description>test project</description>
@@ -28,7 +32,7 @@
 			<version>${iaf.version}</version>
 			<type>war</type>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -51,6 +55,14 @@
 		<defaultGoal>package</defaultGoal>
 		<plugins>
 			<plugin>
+      			  <groupId>org.apache.maven.plugins</groupId>
+       			  <artifactId>maven-release-plugin</artifactId>
+      			  <version>2.5</version>
+     		           <configuration>
+        			  <tagNameFormat>v@{project.version}</tagNameFormat>
+       			 </configuration>
+      </plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.7.0</version>
@@ -68,18 +80,77 @@
 					<enableSecurityConstraints>false</enableSecurityConstraints>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+						<configuration>
+							<gpgArguments>
+								<arg>--pinentry-mode</arg>
+								<arg>loopback</arg>
+							</gpgArguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	
 	<profiles>
 		<profile>
-			<id>piet</id>
+			<id>nexusIbissource</id>
 			<distributionManagement>
-				<site><id>IPnexus</id>
-					  <name>nexus</name>
-					  <url>https</url>
+				<repository>
+					<id>nexusIbissource</id>
+					<name>nexusIbissource</name>
+					<url>http://nexus.ibissource.org/content/repositories/nexusIbissource</url>
+				</repository>
+
+				<site>
+					<id>www.ibissource.org</id>
+					<url>file:target/site-deploy</url>
 				</site>
 			</distributionManagement>
+		</profile>
+
+		<profile>
+			<id>profile2MAVEN</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.6.8</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>profile2MAVEN</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
 </project>
