@@ -1,0 +1,53 @@
+<module>
+	<adapter
+		name="BaseText"
+		active="${BaseText.active}"
+	>
+		<receiver
+			name="BaseText"
+			className="nl.nn.adapterframework.receivers.GenericReceiver"
+		>
+			<listener
+				name="BaseText"
+				className="nl.nn.adapterframework.receivers.JavaListener"/>
+		</receiver>
+		<pipeline firstPipe="fetchSessionKey">
+			<exits>
+				<exit
+					path="EXIT"
+					state="success" />
+			</exits>
+			<pipe
+				name="fetchSessionKey"
+				className="nl.nn.adapterframework.pipes.PutParametersInSession"
+			>
+				<param
+					name="sessionKeyfirstPipeTextBase"
+					xpathExpression="file/path" />
+				<param
+					name="sessionKeyfirstPipeBase"
+					xpathExpression="file/base64" />
+				<forward
+					name="success"
+					path="transFormation" />
+			</pipe>
+			<pipe
+				name="transFormation"
+				className="nl.nn.adapterframework.pipes.FilePipe"
+				getInputFromSessionKey="sessionKeyfirstPipeBase"
+				actions="decode,write"
+				fileNameSessionKey="sessionKeyfirstPipeTextBase"
+				
+				
+				
+			>
+				<forward
+					name="succes"
+					path="EXIT" />
+			</pipe>
+
+
+
+		</pipeline>
+	</adapter>
+</module>

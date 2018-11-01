@@ -1,0 +1,20 @@
+<xsl:stylesheet
+	version="2.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+>
+	<xsl:output method="xml" indent="yes" />
+	<xsl:param name="orginalTextBase" />
+	<xsl:param name="originalText"/>
+	<xsl:template match="/">
+		<file>
+			<path>
+				<xsl:value-of select="$originalText"/>
+			</path>
+			
+			<base64>
+				<xsl:value-of select="$orginalTextBase"/>
+			</base64>
+		</file>
+	</xsl:template>
+
+</xsl:stylesheet>

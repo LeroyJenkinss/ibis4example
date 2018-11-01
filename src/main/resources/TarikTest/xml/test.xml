@@ -1,0 +1,14 @@
+<result>
+  <fielddefinition>
+    <field name="KOLOM1" type="VARCHAR" columnDisplaySize="2147483647" precision="2147483647" scale="0" isCurrency="false" columnTypeName="VARCHAR" columnClassName="java.lang.String" />
+    <field name="KOLOM2" type="VARCHAR" columnDisplaySize="2147483647" precision="2147483647" scale="0" isCurrency="false" columnTypeName="VARCHAR" columnClassName="java.lang.String" />
+    <field name="KOLOM3" type="VARCHAR" columnDisplaySize="2147483647" precision="2147483647" scale="0" isCurrency="false" columnTypeName="VARCHAR" columnClassName="java.lang.String" />
+  </fielddefinition>
+  <rowset>
+    <row number="0">
+      <field name="KOLOM1">test1</field>
+      <field name="KOLOM2">test2</field>
+      <field name="KOLOM3">test3</field>
+    </row>
+  </rowset>
+</result>

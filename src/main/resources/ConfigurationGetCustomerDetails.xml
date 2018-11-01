@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module>
+	   <adapter name="GetCustomerDetails" description="Adapter om klantgegevens uit een backend systeem te halen">
+        <receiver className="nl.nn.adapterframework.receivers.GenericReceiver" name="GetCustomerDetails_Receiver">
+            <listener className="nl.nn.adapterframework.http.rest.ApiListener" 
+                      name="GetCustomerDetails_Listener"
+                      uriPattern="customerdetails"
+                      method="POST"
+                      consumes="XML"
+                      produces="XML"
+                    />
+        </receiver>
+        <pipeline firstPipe="ExecuteSelectQuery">
+    <pipe name="ExecuteSelectQuery" 
+        className="nl.nn.adapterframework.pipes.GenericMessageSendingPipe">
+        <sender name="ExecuteInsertQuery" 
+            className="nl.nn.adapterframework.jdbc.FixedQuerySender"
+            queryType="select"
+            query="SELECT * FROM CUSTOMERS WHERE ClientNr=?" 
+            jmsRealm="jdbc">
+            <param  sessionKey="originalMessage" 
+                    xpathExpression="Request/Klantnummer"
+                   />
+        </sender>
+        <forward name="success" path="MapResponse"/>
+    </pipe>
+    <pipe name="MapResponse" 
+        className="nl.nn.adapterframework.pipes.XsltPipe" 
+        styleSheetName="getCustomerDetails/xsl/mapResponse.xsl">
+        <forward name="success" path="EXIT"/>
+</pipe>
+<exits>
+    <exit path="EXIT" state="success"/>
+</exits>
+<inputValidator
+    className="nl.nn.adapterframework.pipes.XmlValidator"
+    schema="getCustomerDetails/xsd/klantDetailsRequest.xsd"
+    root="Request"
+    throwException="true">
+</inputValidator>
+<outputValidator
+    className="nl.nn.adapterframework.pipes.XmlValidator"
+    schema="getCustomerDetails/xsd/klantDetailsResponse.xsd"
+    root="Response"
+    throwException="true">
+</outputValidator>
+</pipeline>
+</adapter>
+</module>   

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="tst" >
+
+<xs:element name="xml" type="xs:string" >
+ 	
+</xs:element>
+
+</xs:schema>

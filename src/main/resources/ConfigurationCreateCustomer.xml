@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module>
+	<adapter
+		name="CreateCustomer"
+		
+		description="CreateCustomer"
+	>
+		<receiver
+			className="nl.nn.adapterframework.receivers.GenericReceiver"
+			name="CreateCustomer_Receiver"
+		>
+			<listener
+				className="nl.nn.adapterframework.http.rest.ApiListener"
+				uriPattern="CreateCustomer"
+				method="POST"
+				consumes="XML"
+				produces="XML" />
+		</receiver>
+		<pipeline firstPipe="ExecuteInsertQuery">
+			<exits>
+				<exit
+					path="EXIT"
+					state="success" />
+			</exits>
+
+			<inputValidator
+				className="nl.nn.adapterframework.pipes.XmlValidator"
+				schema="CreateCustomer/xsd/customer.xsd"
+				throwException="true"
+			>
+			</inputValidator>
+
+			<pipe
+				name="ExecuteInsertQuery"
+				className="nl.nn.adapterframework.pipes.GenericMessageSendingPipe"
+			>
+				<sender
+					name="ExecuteInsertQuery"
+					className="nl.nn.adapterframework.jdbc.FixedQuerySender"
+					query="INSERT INTO customers (ClientNr, Initials, Firstname, LastName, Title, Street, Postalcode, HouseNr, Addition, City, CreationDate)    VALUES (?,?,?,?,?,?,?,?,?,?,SYSDATE);"
+					jmsRealm="jdbc"
+				>
+					<param
+						name="Klantnummer"
+						sessionKey="originalMessage"
+						xpathExpression="Klant/Klantnummer" />
+					<param
+						name="Voorletters"
+						sessionKey="originalMessage"
+						xpathExpression="Klant/Voorletters" />
+					<param
+						name="Voornaam"
+						sessionKey="originalMessage"
+						xpathExpression="Klant/Voornaam" />
+					<param
+						name="Achternaam"
+						sessionKey="originalMessage"
+						xpathExpression="Klant/Achternaam" />
+					<param
+						name="Titel"
+						sessionKey="originalMessage"
+						xpathExpression="Klant/Titel" />
+					<param
+						name="Straat"
+						sessionKey="originalMessage"
+						xpathExpression="Klant/Straat" />
+					<param
+						name="Postcode"
+						sessionKey="originalMessage"
+						xpathExpression="Klant/Postcode" />
+					<param
+						name="Huisnummer"
+						sessionKey="originalMessage"
+						xpathExpression="Klant/Huisnummer" />
+					<param
+						name="Huisnummer2"
+						sessionKey="originalMessage"
+						xpathExpression="Klant/Huisnummer2" />
+					<param
+						name="Plaats"
+						sessionKey="originalMessage"
+						xpathExpression="Klant/Plaats" />
+				</sender>
+				<forward
+					name="success"
+					path="EXIT" />
+			</pipe>
+		</pipeline>
+
+	</adapter>
+</module>

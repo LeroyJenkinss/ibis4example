@@ -1,7 +1,21 @@
 <!DOCTYPE configuration [
 	<!ENTITY HelloWorld SYSTEM "ConfigurationHelloWorld.xml">
 	<!ENTITY HelloWorlds SYSTEM "ConfigurationHelloWorlds.xml">
-]>
+	<!ENTITY TarikTest SYSTEM "ConfigurationTarikTest.xml">
+	<!ENTITY tarikToCd SYSTEM "ConfigurationCd.xml">
+	<!ENTITY NewOefening SYSTEM "ConfigurationNewOefening.xml">
+	<!ENTITY NewOefening2 SYSTEM "ConfigurationNewOefening2.xml">
+	<!ENTITY HuiswerkPOST SYSTEM "ConfigurationHuiswerkPOST.xml">
+	<!ENTITY HuiswerkDELETE SYSTEM "ConfigurationHuiswerkDELETE.xml">
+	<!ENTITY HuiswerkGET SYSTEM "ConfigurationHuiswerkGET.xml">
+	<!ENTITY HuiswerkPUT SYSTEM "ConfigurationHuiswerkPUT.xml">
+	<!ENTITY TextBase SYSTEM "ConfigurationTextBase.xml">
+	<!ENTITY BaseText SYSTEM "ConfigurationBaseText.xml">
+	<!ENTITY CreateCustomer SYSTEM "ConfigurationCreateCustomer.xml">
+	<!ENTITY GetCustomerOverview SYSTEM "ConfigurationGetCustomerOverview.xml">
+	<!ENTITY GetCustomerDetails SYSTEM "ConfigurationGetCustomerDetails.xml">
+	<!ENTITY larvaTest SYSTEM "ConfigurationLarvaTest.xml">
+							]>
 <configuration name="Ibis4Example">
 	<jmsRealms>
 		<jmsRealm realmName="jdbc" datasourceName="jdbc/${instance.name.lc}"/>
@@ -9,4 +23,19 @@
 	</jmsRealms>
 	&HelloWorld;
 	&HelloWorlds;
+	&TarikTest;
+	&tarikToCd;
+	&NewOefening;
+	&NewOefening2;
+	&HuiswerkPOST;
+	&HuiswerkDELETE;
+	&HuiswerkPUT;
+	&HuiswerkGET;
+	&TextBase;
+	&BaseText;
+	&CreateCustomer;
+	&GetCustomerOverview;
+	&GetCustomerDetails;
+	&larvaTest;
+	
 </configuration>

@@ -1,0 +1,53 @@
+<module>
+	<adapter
+		name="TextBase"
+		active="${TextBase.active}"
+	>
+		<receiver
+			name="TextBase"
+			className="nl.nn.adapterframework.receivers.GenericReceiver"
+		>
+			<listener
+				name="TextBase"
+				className="nl.nn.adapterframework.receivers.JavaListener" />
+		</receiver>
+		<pipeline firstPipe="fetchFile">
+			<exits>
+				<exit
+					path="EXIT"
+					state="success" />
+			</exits>
+			<pipe
+				name="fetchFile"
+				className="nl.nn.adapterframework.pipes.FilePipe"
+				fileNameSessionKey="originalMessage"
+				actions="read"
+				outputType="base64"
+				storeResultInSessionKey="sessionKeyInput"
+			>
+				<forward
+					name="success"
+					path="transformation" />
+			</pipe>
+			<pipe
+				name="transformation"
+				getInputFromFixedValue="&lt;xml/>"
+				className="nl.nn.adapterframework.pipes.XsltPipe"
+				styleSheetName="TextBase/textBase.xml"
+			>
+
+				<param
+					name="orginalTextBase"
+					sessionKey="sessionKeyInput" />
+				<param
+					name="originalText"
+					sessionKey="originalMessage"/>
+
+				<forward
+					name="success"
+					path="EXIT" />
+
+			</pipe>
+		</pipeline>
+	</adapter>
+</module>

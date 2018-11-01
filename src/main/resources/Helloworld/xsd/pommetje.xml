@@ -1,0 +1,11 @@
+describe ("test zoo site for input field on home page", function (){
+	it ("to test inputfield and check txt output",function(){
+		browser.get("http://www.theteststroom.com/javaapp");
+		element(by.model("person.name")).sendkey("I will subscribe to this channel");
+		element(by.binding("person.name")).getText().then(function(text){
+			console.log(text);
+		});
+		
+	});
+	
+});

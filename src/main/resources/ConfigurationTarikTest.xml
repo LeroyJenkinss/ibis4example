@@ -1,0 +1,41 @@
+<module>
+	<adapter name="TarikTest" active="${TarikTest.active}">
+		<receiver
+			name="TarikTest"
+			className="nl.nn.adapterframework.receivers.GenericReceiver"
+			>
+			<listener
+				name="TarikTest"
+				className="nl.nn.adapterframework.http.rest.ApiListener"
+				method="GET"
+				uriPattern="cds"
+			/>
+		</receiver>
+		<pipeline firstPipe="Result">
+			<exits>
+				<exit path="EXIT" state="success"/>
+			</exits>
+			<pipe name="Result"
+				className="nl.nn.adapterframework.pipes.GenericMessageSendingPipe">
+				
+				<sender name="sendQuery"
+				className="nl.nn.adapterframework.jdbc.FixedQuerySender"
+				query="select * from tarik"
+				queryType="select"
+				jmsRealm="jdbc"
+				/>
+				<forward name="success" path="Omzetten"/>
+			</pipe>
+			<pipe
+				name="Omzetten"
+				className="nl.nn.adapterframework.pipes.XsltPipe"
+				styleSheetName="TarikTest/xsl/tarik.xsl"
+				xslt2="true"
+				>
+				<forward name="success" path="EXIT"/>
+			</pipe>
+			
+		</pipeline>	
+			
+	</adapter>
+</module>

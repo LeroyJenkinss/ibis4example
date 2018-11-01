@@ -1,0 +1,34 @@
+<module>
+	<adapter name="tarikToCd" active="${tarikToCd.active}">
+		<receiver
+			name="tarikToCd"
+			className="nl.nn.adapterframework.receivers.GenericReceiver"
+			>
+			<listener
+				name="tarikToCd"
+				className="nl.nn.adapterframework.receivers.JavaListener"
+			/>
+		</receiver>
+		<pipeline firstPipe="eerste">
+			<exits>
+				<exit path="EXIT" state="success"/>
+			</exits>
+			<pipe name="eerste"
+				className="nl.nn.adapterframework.pipes.ForEachChildElementPipe"
+				elementXPathExpression="catalog/cd">
+				
+				<sender name="sendQuery"
+				className="nl.nn.adapterframework.jdbc.FixedQuerySender"
+				query="insert into tarik (KOLOM1,KOLOM2,KOLOM3)values(?,?,?)"
+				jmsRealm="jdbc"
+				/>
+				<param name="KOLOM1" xpathExpression="cd/title"/>
+				<param name="KOLOM2" xpathExpression="cd/artist"/>
+				<param name="KOLOM3" xpathExpression="cd/country"/>
+				<forward name="success" path="EXIT"/>
+			</pipe>
+			
+			</pipeline>
+			</adapter>
+			
+			</module>

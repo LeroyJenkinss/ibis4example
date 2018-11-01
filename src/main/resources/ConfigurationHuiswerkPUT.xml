@@ -1,0 +1,45 @@
+<module>
+<adapter name="HuiswerkPUT"	active="${HuiswerkPUT.active}">
+		<receiver	
+			name="HuiswerkPUT"
+			className="nl.nn.adapterframework.receivers.GenericReceiver"
+			>
+				<listener
+					name="HuiswerkPUT"
+					className="nl.nn.adapterframework.http.rest.ApiListener"
+					method="PUT"
+					uriPattern="huiswerk/{ID}"
+			/>
+		</receiver>
+		<pipeline firstPipe="validatie">
+			<exits>
+				<exit path="EXIT" state="success"/>
+			</exits>
+			
+			<pipe name="validatie"
+			className="nl.nn.adapterframework.pipes.XmlValidator"
+			schema="huiswerk/test3.xsd"
+			throwException="true"
+			>
+			<foward name="success" path="PUTPipe"/>
+			</pipe>
+			
+			<pipe name="PUTPipe"
+			className="nl.nn.adapterframework.pipes.ForEachChildElementPipe"
+			elementXPathExpression="members/member">
+			
+				<sender name="PUTQuery"
+					className="nl.nn.adapterframework.jdbc.FixedQuerySender"
+					jmsRealm="jdbc"
+					query="UPDATE tarikPersons SET Lastname=? , Firstname=?, Age=? WHERE ID = ?;">
+						
+						<param name="newLastName"  xpathExpression="member/LastName"/>
+						<param name="newFirstName"  xpathExpression="member/FirstName"/>
+						<param name="newAge" type="integer" xpathExpression="member/Age"/>
+						<param name="update3" type="integer" sessionKey="ID"/>
+			 </sender>
+  	 		  <forward name="success" path="EXIT"/>
+			  </pipe>
+		</pipeline>
+</adapter>
+</module>			  

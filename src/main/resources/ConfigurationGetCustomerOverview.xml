@@ -1,0 +1,58 @@
+<ibis>
+	<adapter
+		name="GetCustomerOverview"
+		description="Adapter om klantoverzicht op te halen"
+	>
+		<receiver
+			className="nl.nn.adapterframework.receivers.GenericReceiver"
+			name="GetCustomerOverview"
+		>
+			<listener
+				className="nl.nn.adapterframework.http.HttpListener"
+				name="GetCustomerOverview_Listener"
+				serviceName="GetCustomerOverview" />
+		</receiver>
+		<pipeline firstPipe="ExecuteSelectQuery">
+			<exits>
+				<exit
+					path="EXIT"
+					state="success" />
+			</exits>
+
+			<outputValidator
+				className="nl.nn.adapterframework.pipes.XmlValidator"
+				schema="getCustomerOverview/xsd/klantenOverzicht.xsd"
+				throwException="true"
+			>
+			</outputValidator>
+
+			<pipe
+				name="ExecuteSelectQuery"
+				className="nl.nn.adapterframework.pipes.GenericMessageSendingPipe"
+			>
+				<sender
+					name="ExecuteInsertQuery"
+					className="nl.nn.adapterframework.jdbc.FixedQuerySender"
+					queryType="select"
+					query="SELECT ClientNr, Initials, Firstname, LastName, CreationDate FROM CUSTOMERS"
+					jmsRealm="jdbc"
+				>
+				</sender>
+				<forward
+					name="success"
+					path="MapResponse" />
+			</pipe>
+			<pipe
+				name="MapResponse"
+				className="nl.nn.adapterframework.pipes.XsltPipe"
+				styleSheetName="getCustomerOverview/xsl/mapResponse.xsl"
+			>
+				<forward
+					name="success"
+					path="EXIT" />
+			</pipe>
+
+
+		</pipeline>
+	</adapter>
+</ibis>

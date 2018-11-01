@@ -1,0 +1,110 @@
+<module>
+	<adapter
+		name="HuiswerkGET"
+		active="${HuiswerkGET.active}"
+	>
+		<receiver
+			name="HuiswerkGET"
+			className="nl.nn.adapterframework.receivers.GenericReceiver"
+		>
+			<listener
+				name="HuiswerkGET"
+				className="nl.nn.adapterframework.http.rest.ApiListener"
+				method="GET"
+				uriPattern="huiswerk/{id}" />
+		</receiver>
+
+		<pipeline firstPipe="GETPipe">
+			<exits>
+				<exit
+					path="EXIT"
+					state="success" />
+			</exits>
+
+			<pipe
+				name="GETPipe"
+				className="nl.nn.adapterframework.pipes.GenericMessageSendingPipe"
+			>
+				<sender
+					name="GETQuery"
+					className="nl.nn.adapterframework.jdbc.FixedQuerySender"
+					query="SELECT * FROM tarikPersons WHERE ID = ?"
+					queryType="select"
+					jmsRealm="jdbc"
+				>
+					<param
+						name="select1"
+						type="integer"
+						sessionKey="id" />
+				</sender>
+				<forward
+					name="success"
+					path="checkPipe" />
+			</pipe>
+			<pipe
+				name="checkPipe"
+				className="nl.nn.adapterframework.pipes.XmlIf"
+				xpathExpression="count(rowset/row)=0"
+			>
+				<forward
+					name="then"
+					path="input" />
+				<forward
+					name="else"
+					path="input" />
+			</pipe>
+			<pipe
+				name="ego"
+				className="nl.nn.adapterframework.pipes.EchoPipe"
+
+			>
+				<forward
+					name="success"
+					path="EXIT" />
+
+			</pipe>
+			<pipe
+				name="input"
+				className="nl.nn.adapterframework.pipes.XsltPipe"
+				getInputFromFixedValue="&lt;xml/>"
+				styleSheetName="huiswerk/switch.xsl"
+				
+			>
+				<param
+					name="keuze"
+					type="integer"
+					sessionKey="id" />
+
+				<forward
+					name="success"
+					path="switch" />
+</pipe>
+				<pipe
+					name="switch"
+					className="nl.nn.adapterframework.pipes.XmlSwitch"
+					xpathExpression="members/member"
+				>
+					<forward
+						name="1"
+						path="ego" />
+					<forward
+						name="2"
+						path="EXIT" />
+					<forward
+						name="4"
+						path="EXIT" />
+					<forward
+						name="5"
+						path="EXIT" />
+
+
+
+				</pipe>
+		</pipeline>
+	</adapter>
+</module>
+			 
+			 
+			 
+			 
+			 

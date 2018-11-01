@@ -1,0 +1,36 @@
+
+	<adapter name="NewOefening" active="${NewOefening.active}">
+		<receiver
+			name="NewOefening"
+			className="nl.nn.adapterframework.receivers.GenericReceiver"
+			>
+			<listener
+				name="NewOefening"
+				className="nl.nn.adapterframework.receivers.JavaListener"
+				/>
+		</receiver>
+		<pipeline firstPipe="eerste">
+			<exits>
+				<exit path="EXIT" state="success"/>
+			</exits>
+			<pipe
+				name="eerste"
+				className="nl.nn.adapterframework.pipes.XsltPipe"
+				styleSheetName="oefening/xsl/oefeningTest.xsl"
+				xslt2="true"
+				>
+				<forward name="success" path="tweede"/>
+			</pipe>
+			<pipe name="tweede"
+				className="nl.nn.adapterframework.pipes.ForEachChildElementPipe"
+				elementXPathExpression="artists/artist">
+		
+					<sender name="one"
+					className="nl.nn.adapterframework.senders.IbisLocalSender"
+					javaListener="NewOefening2"
+					/>
+					<forward name="success" path="EXIT"/>
+					</pipe>
+		</pipeline>
+			</adapter>
+			

@@ -1,0 +1,35 @@
+<module>
+<adapter name="HuiswerkDelete"	active="${HuiswerkDELETE.active}">
+		<receiver	
+			name="HuiswerkDelete"
+			className="nl.nn.adapterframework.receivers.GenericReceiver"
+			>
+				<listener
+					name="HuiswerkDelete"
+					className="nl.nn.adapterframework.http.rest.ApiListener"
+					method="DELETE"
+					uriPattern="huiswerk/{ID}"
+			/>
+		</receiver>
+		<pipeline firstPipe="deletePipe">
+			<exits>
+				<exit path="EXIT" state="success"/>
+			</exits>
+			
+			<pipe name="deletePipe"
+				className="nl.nn.adapterframework.pipes.GenericMessageSendingPipe">
+			
+				<sender name="deleteQuery"
+			 	className="nl.nn.adapterframework.jdbc.FixedQuerySender"
+			 	query="DELETE FROM tarikPersons WHERE ID = ?"
+			 	jmsRealm="jdbc">
+			 	
+			 	<param name="delete" type="integer" sessionKey="ID"/>	
+			 	</sender>
+			  <forward name="success" path="EXIT"/>
+			  </pipe>
+		</pipeline>
+</adapter>
+</module>			  
+			 
+			  

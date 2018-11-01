@@ -1,0 +1,55 @@
+<module>
+<adapter name="HuiswerkPOST" active="${HuiswerkPOST.active}">
+		<receiver	
+			name="HuiswerkPOST"
+			className="nl.nn.adapterframework.receivers.GenericReceiver">
+			
+				<listener
+					name="HuiswerkPOST"
+					className="nl.nn.adapterframework.http.rest.ApiListener"
+					method="POST"
+					uriPattern="huiswerk"/>
+		</receiver>
+		
+		<pipeline firstPipe="validatiePipe">
+			<exits>
+				<exit path="EXIT" state="success"/>
+			</exits>
+			
+		<pipe name="validatiePipe" 
+				className="nl.nn.adapterframework.pipes.XmlValidator"
+				schema="huiswerk/test3.xsd"
+				root="members"
+				throwException="true">
+				
+				<forward name="success" path="queryPipe"/>
+			</pipe>
+			
+			<pipe name="queryPipe"	
+			className="nl.nn.adapterframework.pipes.ForEachChildElementPipe"
+				elementXPathExpression="members/member">
+				
+				<sender name="POSTQuery" 
+					className="nl.nn.adapterframework.jdbc.FixedQuerySender"
+					jmsRealm="jdbc"
+					query="INSERT INTO tarikPersons(Lastname,Firstname,Age) VALUES (?,?,?)">
+					
+					<param name="post" type="string" xpathExpression="member/LastName"/>
+					<param name="post1" type="string" xpathExpression="member/FirstName"/>
+					<param name="post2" type="integer" xpathExpression="member/Age"/>
+					
+					
+				</sender>
+				
+				<forward name="success" path="EXIT"/>
+				</pipe>
+			
+				
+				
+			</pipeline>
+		</adapter>
+</module>
+				
+				
+	
+		

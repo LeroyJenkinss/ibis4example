@@ -1,0 +1,36 @@
+<module>
+    <adapter name="larvaTest" active="${larvaTest.active}">
+        <receiver
+            name="larvaTest"
+            className="nl.nn.adapterframework.receivers.GenericReceiver"
+            >
+            <listener
+                name="larvaTest"
+                className="nl.nn.adapterframework.receivers.JavaListener"
+            />
+        </receiver>
+        <pipeline firstPipe="checkifhello">
+            <exits>
+                <exit path="EXIT" state="success" code="200" />
+                <exit path="ERROR" state="failure" code="500" />
+            </exits>
+            
+            <pipe 
+                name = "checkifhello"
+                className="nl.nn.adapterframework.pipes.XmlIf"
+                expressionValue = "hello">
+                <forward name="then" path="HelloWorld"/>
+                <forward name="else" path="ERROR"/>
+            </pipe>
+            
+            <pipe
+                name="HelloWorld"
+                className="nl.nn.adapterframework.pipes.FixedResult"
+                returnString="Hello World"
+                >
+                <forward name="success" path="EXIT"/>
+            </pipe>
+        </pipeline>
+    </adapter>
+    
+</module>

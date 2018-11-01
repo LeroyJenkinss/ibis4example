@@ -1,0 +1,33 @@
+<module>
+	<adapter name="NewOefening2" active="${NewOefening2.active}">
+		<receiver
+			name="NewOefening2"
+			className="nl.nn.adapterframework.receivers.GenericReceiver"
+			>
+			<listener
+				name="NewOefening2"
+				className="nl.nn.adapterframework.receivers.JavaListener"
+			/>
+		</receiver>
+		<pipeline firstPipe="eerste1">
+			<exits>
+				<exit path="EXIT" state="success"/>
+			</exits>
+			<pipe
+				name="eerste1"
+				className="nl.nn.adapterframework.pipes.XsltPipe"
+				styleSheetName="newOefening2/xsl/newOefening2.xsl"
+				>
+				<forward name="success" path="tweede2"/>
+			</pipe>
+			
+			<pipe name="tweede2"
+			className="nl.nn.adapterframework.pipes.FilePipe"
+			actions="write" 
+			
+			>
+			<forward name="success" path="EXIT"/>	
+			</pipe>
+			</pipeline>
+		</adapter>
+		</module>
