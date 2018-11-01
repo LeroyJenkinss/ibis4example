@@ -1,8 +1,5 @@
- <module>
-	<adapter
-		name="HelloWorld"
-		active="${HelloWorld.active}"
-	>
+<adapter>
+	<adapter name="HelloWorld" active="${HelloWorld.active}">
 		<receiver
 			name="HelloWorld"
 			className="nl.nn.adapterframework.receivers.GenericReceiver"
@@ -40,4 +37,5 @@
 		</pipeline>
 
 	</adapter>
-</module>
+</adapter>
+
